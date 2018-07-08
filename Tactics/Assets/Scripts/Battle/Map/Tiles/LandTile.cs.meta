@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e044bf70c2ba9c04faaed03b84ac8635
+timeCreated: 1519865524
+licenseType: Free
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - tilePrefab: {fileID: 4943679368772550, guid: 0cebac1f7e5edc6489aac9d1ba6a70d2,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
