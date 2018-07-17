@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23821152797578708}
   - component: {fileID: 114610585232879856}
   m_Layer: 0
-  m_Name: WaterTile Prefab
+  m_Name: Water Prefab
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 44a2b53d3b0110f42b0b3ca896498534, type: 2}
   m_StaticBatchInfo:

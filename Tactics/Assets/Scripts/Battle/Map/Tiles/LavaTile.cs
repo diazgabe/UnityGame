@@ -5,6 +5,7 @@ using UnityEngine;
 public class LavaTile : BaseTile {
 
     public LavaTile() {
-        tileType = TileType.Lava;
+        this.tileType = TileType.Lava;
     }
+
 }

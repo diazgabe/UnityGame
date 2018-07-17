@@ -5,7 +5,7 @@ using UnityEngine;
 public class LandTile : BaseTile {
 
     public LandTile() {
-        tileType = TileType.Land;
+        this.tileType = TileType.Land;
     }
 
 }

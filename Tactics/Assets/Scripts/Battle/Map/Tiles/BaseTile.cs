@@ -8,17 +8,17 @@ public enum TileType {
     Lava
 }
 
-public abstract class BaseTile : MonoBehaviour, ITile {
+public abstract class BaseTile : ITile {
 
+    public bool IsOccupied { get; set; }
+    public Vector3Int Location { get; }
     protected TileType tileType;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public BaseTile() {
+        IsOccupied = false;
+    }
+
+    public void setIsOccupied(bool b) {
+        IsOccupied = b;
+    }
 }

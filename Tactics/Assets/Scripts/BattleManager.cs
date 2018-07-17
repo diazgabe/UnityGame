@@ -3,8 +3,9 @@ using UnityEngine.Events;
 
 public class BattleManager : MonoBehaviour {
 
-    private MapGenerator MapGenerator;
-    private Vector2Int mapDimensions = new Vector2Int(5,5);
+    private IMapGenerator MapGenerator;
+    private IMap Map;
+    private Vector3Int mapDimensions = new Vector3Int(5, 5, 5);
     private BaseUnit[] allies;
     private BaseUnit[] enemies;
     private TurnTracker turnTracker;
@@ -13,20 +14,24 @@ public class BattleManager : MonoBehaviour {
     public GameObject currentUnit;
 
     void Awake() {
+        
+    }
 
-        MapGenerator = new LandMapGenerator(mapDimensions);
-
-        Vector3 unitPosition = new Vector3(Random.Range(0, mapDimensions.x), 1f, Random.Range(0, mapDimensions.y));
-        currentUnit = Instantiate(unit, unitPosition, Quaternion.identity);
+    void Start () {
+        setUpMap();
+        setUpUnits();
 
         turnTracker = new TurnTracker();
     }
 
-    // Use this for initialization
-    void Start () {
+    private void setUpMap() {
+        MapGenerator = new LandMapGenerator(mapDimensions);
+        Map = MapGenerator.generateMap();
+    }
 
-        
-
+    private void setUpUnits() {
+        Vector3 unitPosition = new Vector3(Random.Range(0, mapDimensions.x), 1f, Random.Range(0, mapDimensions.y));
+        currentUnit = Instantiate(unit, unitPosition, Quaternion.identity);
     }
 	
 	// Update is called once per frame

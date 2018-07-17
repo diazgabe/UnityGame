@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    public GameUnit activeUnit;
+    public IUnit activeUnit;
 
 	// Use this for initialization
 	void Start () {

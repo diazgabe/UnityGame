@@ -5,6 +5,7 @@ using UnityEngine;
 public class WaterTile : BaseTile {
 
     public WaterTile() {
-        tileType = TileType.Water;
+        this.tileType = TileType.Water;
     }
+
 }

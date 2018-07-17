@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 23472881500297390}
   - component: {fileID: 114218719605444186}
   m_Layer: 0
-  m_Name: LavaTile Prefab
+  m_Name: Lava Prefab
   m_TagString: Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 199c07a5ebf2ed04bbba586a67b1acb5, type: 2}
   m_StaticBatchInfo:
