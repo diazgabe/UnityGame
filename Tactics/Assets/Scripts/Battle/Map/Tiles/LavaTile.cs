@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LavaTile : BaseTile {
 
-    public LavaTile() {
+    public override void Start() {
+        base.Start();
         this.tileType = TileType.Lava;
     }
 

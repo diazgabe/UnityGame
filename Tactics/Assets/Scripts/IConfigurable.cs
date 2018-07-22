@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITile: IConfigurable {
-    Vector3Int Index { get; }
+public interface IConfigurable {
+
+    void configure(IConfig config);
+
 }

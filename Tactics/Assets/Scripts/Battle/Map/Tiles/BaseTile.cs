@@ -8,17 +8,25 @@ public enum TileType {
     Lava
 }
 
-public abstract class BaseTile : ITile {
+public abstract class BaseTile : MonoBehaviour, ITile, IConfigurable {
 
-    public bool IsOccupied { get; set; }
-    public Vector3Int Location { get; }
     protected TileType tileType;
+    public bool IsOccupied { get; set; }
+    public Vector3Int Index { get; }
 
-    public BaseTile() {
+    public virtual void Awake() {
         IsOccupied = false;
     }
 
-    public void setIsOccupied(bool b) {
-        IsOccupied = b;
+    public virtual void Start() {
+        
+    }
+
+    public virtual void Update() {
+        
+    }
+
+    public virtual void configure(IConfig config) {
+
     }
 }

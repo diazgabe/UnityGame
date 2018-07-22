@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class WaterTile : BaseTile {
 
-    public WaterTile() {
+    public override void Start() {
+        base.Start();
         this.tileType = TileType.Water;
     }
 
