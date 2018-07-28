@@ -2,7 +2,7 @@
 //using System.Collections.Generic;
 //using UnityEngine;
 
-//public class MapFactory : MonoBehaviour, IFactory {
+//public class Omnimove : BaseMoveAbility {
 
 //	// Use this for initialization
 //	void Start () {
@@ -13,6 +13,4 @@
 //	void Update () {
 		
 //	}
-
-//    void generateFromConfig();
 //}

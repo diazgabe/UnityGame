@@ -6,7 +6,7 @@ public class CameraController : MonoBehaviour {
 
     private Camera cam;
 
-    private const int panZone = 70;
+    private const int panZone = 30;
     private int cameraSpeed { get; set; } = 7;
 
     private const int minZoom = 1;

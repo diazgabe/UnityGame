@@ -2,8 +2,8 @@
   "map": {
     "dimensions": {
       "x": 5,
-        "y": 1,
-        "z": 5
+      "y": 1,
+      "z": 5
     },
     "tiles": [
       {
@@ -207,5 +207,31 @@
           }
       }
     ]
-  }
+  },
+  "Allies": [
+	 {
+	 	 "CurrentHP": 5,
+		 "MaxHP": 5,
+		 "Name": "Me",
+		 "MoveRange": 3,
+		 "Index": {
+			"x": 1,
+            "y": 0,
+            "z": 1
+		 }
+	 }
+  ],
+  "Enemies": [
+	{
+	 	 "CurrentHP": 5,
+		 "MaxHP": 5,
+		 "Name": "You",
+		 "MoveRange": 3,
+		 "Index": {
+			"x": 3,
+            "y": 0,
+            "z": 3
+		 }
+	 }
+  ]
 }

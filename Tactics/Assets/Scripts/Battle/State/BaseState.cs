@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface IMapGenerator {
-    IMap generateMap();
+public abstract class BaseState : IState {
+
 }

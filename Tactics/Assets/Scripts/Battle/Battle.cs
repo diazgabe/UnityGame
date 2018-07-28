@@ -6,24 +6,27 @@ using UnityEngine;
 public class Battle : MonoBehaviour, IConfigurable{
 
     private Map map;
+    private List<IUnit> Allies;
+    private List<IUnit> Enemies;
     private string filePath = "Assets/Resources/jsons/testMap.json";
+    private GameObject Ally;
+    private GameObject Enemy;
 
 
     void Awake() {
-
+        Ally = Resources.Load<GameObject>("Prefabs/Units/Ally");
+        Enemy = Resources.Load<GameObject>("Prefabs/Units/Enemy");
     }
 
 	// Use this for initialization
 	void Start () {
-        //serializeBattleTest();
         string jsonData = File.ReadAllText(filePath);
         BattleConfig battleConfig = JsonUtility.FromJson<BattleConfig>(jsonData);
-        Debug.Log(JsonUtility.ToJson(battleConfig.map));
+
         MapConfig mapConfig = battleConfig.map;
-        this.gameObject.AddComponent<Map>();
-        map = this.gameObject.GetComponent<Map>();
-        map.configure(mapConfig);
-        //configure(battleConfig);
+        initializeMap(mapConfig);
+
+        initializeUnits(battleConfig.Allies, battleConfig.Enemies);
     }
 	
 	// Update is called once per frame
@@ -34,6 +37,27 @@ public class Battle : MonoBehaviour, IConfigurable{
     public void configure(IConfig config) {
         BattleConfig battleConfig = config as BattleConfig;
         
+    }
+
+    private void initializeMap(MapConfig mapConfig) {
+        map = this.gameObject.AddComponent<Map>();
+        map.configure(mapConfig);
+    }
+
+    private void initializeUnits(List<UnitConfig> allyConfigs, List<UnitConfig> enemyConfigs) {
+        Allies = new List<IUnit>();
+        foreach (UnitConfig unitConfig in allyConfigs) {
+            GameObject newAlly = Instantiate(Ally);
+            map.placeUnitOnIndex(newAlly, unitConfig.Index);
+            Allies.Add(newAlly.GetComponent<BaseUnit>());
+        }
+
+        Enemies = new List<IUnit>();
+        foreach (UnitConfig unitConfig in enemyConfigs) {
+            GameObject newEnemy = Instantiate(Enemy);
+            map.placeUnitOnIndex(newEnemy, unitConfig.Index);
+            Enemies.Add(newEnemy.GetComponent<BaseUnit>());
+        }
     }
 
     public void mapTest() {
@@ -91,8 +115,20 @@ public class Battle : MonoBehaviour, IConfigurable{
         tiles[0] = tile;
         map.tiles = tiles;
 
+        UnitConfig unit = new UnitConfig();
+        unit.CurrentHP = 3;
+        unit.MaxHP = 3;
+        unit.Name = "test";
+        unit.MoveRange = 3;
+        unit.Index = Vector3Int.one;
+
+        List<UnitConfig> Allies = new List<UnitConfig>();
+        Allies.Add(unit);
+
         BattleConfig battleConfig = new BattleConfig();
         battleConfig.map = map;
+        battleConfig.Allies = Allies;
+
 
         Debug.Log(JsonUtility.ToJson(battleConfig));
     }

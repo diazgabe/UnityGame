@@ -14,6 +14,6 @@ public class BattleLogic : MonoBehaviour {
 	}
 
     private void turnFinished() {
-        EventManager.triggerEvent("turnFinished");
+        //EventManager.triggerEvent("turnFinished");
     }
 }

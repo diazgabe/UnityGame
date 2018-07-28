@@ -6,5 +6,6 @@ using UnityEngine;
 public class BattleConfig : IConfig {
 
     public MapConfig map;
-
+    public List<UnitConfig> Allies;
+    public List<UnitConfig> Enemies;
 }

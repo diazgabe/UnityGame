@@ -5,8 +5,8 @@
 //    private float _moveSpeed;
 
 //    public bool canExecute(ITile from, ITile to, int moveRange) {
-//        Vector3Int delta = Utilities.vector3Abs(to.Location - from.Location);
-//        int distance = delta.x + delta.y;
+//        Vector3Int delta = Vector3.Distance(to.Location - from.Location);
+//        int distance = delta.x + delta.z;
 //        if (distance > moveRange) {
 //            return false;
 //        }
