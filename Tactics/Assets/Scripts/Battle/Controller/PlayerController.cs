@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
     private IStateMachine _StateMachine;
-    //public IUnit activeUnit;
+    public IUnit activeUnit;
 
     private void Awake() {
         
@@ -88,21 +88,20 @@ public class PlayerController : MonoBehaviour {
     }
 
     void handleInputAttack() {
-        //if (Input.GetMouseButtonDown(0)) {
+        //if ( Input.GetMouseButtonDown( 0 ) ) {
         //    RaycastHit hit;
         //    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        //    if (Physics.Raycast(ray, out hit)) {
-        //        if (hit.collider.tag == "Tile" && activeUnit.isBlocked == false) {
-        //            if (activeUnit != null) {
+        //    if ( Physics.Raycast( ray, out hit ) ) {
+        //        if ( hit.collider.tag == "Tile" && activeUnit.isBlocked == false ) {
+        //            if ( activeUnit != null ) {
         //                Vector3 newPos = hit.transform.position;
         //                newPos.y = 1;
-        //                activeUnit.moveTowards(newPos);
+        //                activeUnit.moveTowards( newPos );
         //            }
-        //        }
-        //        else if (hit.collider.tag == "Unit") {
-        //            activeUnit = hit.collider.gameObject.GetComponent("GameUnit") as GameUnit;
-        //            Debug.Log("Unit selected.");
+        //        } else if ( hit.collider.tag == "Unit" ) {
+        //            activeUnit = hit.collider.gameObject.GetComponent( "GameUnit" ) as GameUnit;
+        //            Debug.Log( "Unit selected." );
         //        }
         //    }
         //}

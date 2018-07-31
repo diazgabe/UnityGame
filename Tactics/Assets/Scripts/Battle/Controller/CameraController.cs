@@ -18,6 +18,9 @@ public class CameraController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        EventManager.addEventListener( "RotateClockwise", () => { rotateCamera( 90 ); } );
+        EventManager.addEventListener( "RotateCounterClockwise", () => { rotateCamera( -90 ); } );
+
         screenWidth = Screen.width;
         screenHeight = Screen.height;
         screen = new Rect(0, 0, screenWidth, screenHeight);
@@ -63,4 +66,8 @@ public class CameraController : MonoBehaviour {
         }
     }
 
+    void rotateCamera(int degrees) {
+        Debug.Log( "rotateCamera" );
+        transform.Rotate( Vector3.up, degrees, Space.Self );
+    }
 }

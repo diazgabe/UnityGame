@@ -6,17 +6,23 @@ using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour {
 
+    private static UIManager _instance;
+
     private void Awake() {
-        
+        if ( _instance != null && _instance != this ) {
+            Destroy( this.gameObject );
+        } else {
+            _instance = this;
+        }
     }
 
     // Use this for initialization
-    void Start () {
+    private void Start () {
 		
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    private void Update () {
 		
 	}
 
@@ -26,6 +32,16 @@ public class UIManager : MonoBehaviour {
 
     public void moveButtonClick() {
         EventManager.TriggerEvent("Move");
+    }
+
+    public void rotateCounterClockwise() {
+        Debug.Log( "rotateCounterClockwise" );
+        EventManager.TriggerEvent( "RotateCounterClockwise" );
+    }
+
+    public void rotateClockwise() {
+        Debug.Log( "rotateCounterClockwise" );
+        EventManager.TriggerEvent( "RotateClockwise" );
     }
 
     private void Init() {

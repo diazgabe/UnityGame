@@ -7,8 +7,9 @@ public class BaseUnit : MonoBehaviour, IUnit {
     public int CurrentHP { get; set; }
     public int MaxHP { get; set; }
     public string Name { get; set; } 
+    public int AttackRange { get;  }
     public int MoveRange { get; }
-    public int JumpRane { get; }
+    public int JumpRange { get; }
     public Vector3Int Index { get; set; }
     private IMoveAbility moveAbility;
 

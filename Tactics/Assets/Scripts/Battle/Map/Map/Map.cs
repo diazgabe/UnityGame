@@ -14,30 +14,24 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
 
     public static Vector3Int[] directions;
 
+    private HashSet<Vector3Int> highlighted;
+
     private void Awake() {
-        loadTilePrefabs();
-        tileDimensions  = new Vector3(landTile.GetComponent<Renderer>().bounds.size.x, landTile.GetComponent<Renderer>().bounds.size.y, landTile.GetComponent<Renderer>().bounds.size.z);
-        tileOffset = tileDimensions + tileGap;
-        directions = new Vector3Int[4] {
-            new Vector3Int(1, 0, 0),
-            new Vector3Int(-1, 0, 0),
-            new Vector3Int(0, 0, 1),
-            new Vector3Int(0, 0, -1)
-        };
+        initialize();
     }
 
     private void Start() {
-        HashSet<Vector3Int> indexes = getAccessibleTiles( Vector3Int.zero, 3 );
-        Vector3Int[] indeces = new Vector3Int[indexes.Count];
-        indexes.CopyTo(indeces);
-        foreach ( Vector3Int v in indeces ) {
-            Debug.Log( v );
-        }
+        highlighted = getAccessibleTileIndexes( new Vector3Int( 1, 0, 1 ), 2 );
+        EventManager.addEventListener("Attack", onAttackButtonClick);
+        EventManager.addEventListener("Move", onMoveButtonClick);
     }
 
-    public Map(Vector3Int dimensions) {
-        _dimensions = dimensions;
-        _map = new GameObject[_dimensions.x, _dimensions.y, _dimensions.z];
+    private void onAttackButtonClick() {
+        unHighlightTiles( highlighted );
+    }
+
+    private void onMoveButtonClick() {
+        highlightTiles( highlighted );
     }
 
     public void setTile(Vector3Int index, GameObject tile) {
@@ -46,7 +40,8 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
     
     public void configure(IConfig config) {
         MapConfig mapConfig = config as MapConfig;
-        _map = new GameObject[mapConfig.dimensions.x, mapConfig.dimensions.y, mapConfig.dimensions.z];
+        this._dimensions = mapConfig.dimensions;
+        _map = new GameObject[this._dimensions.x, this._dimensions.y, this._dimensions.z];
         foreach (TileConfig tileConfig in mapConfig.tiles) {
             GameObject tile;
             Vector3 tilePosition = Vector3.Scale(tileOffset, tileConfig.index);
@@ -78,8 +73,8 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
     }
 
     public void placeUnitOnIndex(GameObject unit, Vector3Int index) {
-        GameObject tile = _map[index.x, index.y, index.z];
-        tile.GetComponent<ITile>().IsOccupied = true;
+        BaseTile tile = getTile(index);
+        tile.IsOccupied = true;
         Vector3 position = tile.transform.position;
         position.y = 1;
         unit.transform.position = position;
@@ -89,54 +84,97 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
 
     }
 
-    /*
-        V0 is functional. Needs to add the following:
-        * Checks for whether the index exists.
-        * Checks for whether the tile is accessible.
-        * Optimizations (dont add to nextQueue if there wont be a next round) (instead of 2 queues, just use a counter to denote when a round is over and save space).
-        * Triple / comments.
-    */
-    public HashSet<Vector3Int> getAccessibleTiles( Vector3Int start, int range ) {
-        HashSet<Vector3Int> accessibleTiles = new HashSet<Vector3Int>();
-        Queue<Vector3Int> queue = new Queue<Vector3Int>();
-        Queue<Vector3Int> nextQueue = new Queue<Vector3Int>();
+    private void initialize() {
+        loadTilePrefabs();
+        tileDimensions = new Vector3( landTile.GetComponent<Renderer>().bounds.size.x, landTile.GetComponent<Renderer>().bounds.size.y, landTile.GetComponent<Renderer>().bounds.size.z );
+        tileOffset = tileDimensions + tileGap;
+        directions = new Vector3Int[4] {
+            new Vector3Int(1, 0, 0),
+            new Vector3Int(-1, 0, 0),
+            new Vector3Int(0, 0, 1),
+            new Vector3Int(0, 0, -1)
+        };
+    }
 
-        nextQueue.Enqueue(start);
+    private void highlightTiles(HashSet<Vector3Int> tiles) {
+        IEnumerator<Vector3Int> enumerator = tiles.GetEnumerator();
+        while (enumerator.MoveNext()) {
+            ITile tile = getTile(enumerator.Current);
+            tile.highlight();
+        }
+    }
 
-        int iterationCount = 0;
-        while ( nextQueue.Count > 0 && iterationCount <= range) {
+    private void unHighlightTiles( HashSet<Vector3Int> tiles ) {
+        IEnumerator<Vector3Int> enumerator = tiles.GetEnumerator();
+        while ( enumerator.MoveNext() ) {
+            ITile tile = getTile(enumerator.Current);
+            tile.unHighlight();
+        }
+    }
 
-            Debug.Log("Iteration " + iterationCount + ": Moving " + nextQueue.Count + " elements between queues.");
-            for (int i = nextQueue.Count; i > 0 ; i-- ) {
-                Vector3Int temp = nextQueue.Dequeue();
-                queue.Enqueue( temp );
-                Debug.Log( "Moved " + temp );
-            }
-            Debug.Log( "Moving finished." );
+    private BaseTile getTile(Vector3Int v) {
+        return _map[v.x, v.y, v.z].GetComponent<BaseTile>();
+    }
 
-            while (queue.Count > 0) {
-                Vector3Int v = queue.Dequeue();
+    //Still need to add functionality to determine whether tile is accessible under certain unit conditions.
+    /// <summary>
+    /// Uses DFS to find all accessible tile indexes in range of start position on map. 
+    /// </summary>
+    /// <param name="start">Start position.</param>
+    /// <param name="range">Range to limit search to.</param>
+    /// <returns>Returns hashset containing all accessible tile indexes in range of start position.</returns>
+    public HashSet<Vector3Int> getAccessibleTileIndexes( Vector3Int start, int range ) { 
 
-                Debug.Log( "Analyzing " + v );
-
-                if ( accessibleTiles.Contains( v ) ) {
-                    continue;
-                }
-                accessibleTiles.Add( v );
-
-                foreach ( Vector3Int direction in directions ) {
-                    Vector3Int neo = v + direction;
-                    if ( !accessibleTiles.Contains( neo ) ) {
-                        nextQueue.Enqueue( neo );
-                        Debug.Log( "Enqueued " + neo + "to next iteration.");
-                    }
-                }
-            }
-
-            iterationCount++;
+        if ( !this.containsIndex( start ) ) {
+            Debug.LogWarning("Index " + start + " is not in map.");
+            return null;
         }
 
-        return accessibleTiles;
+        HashSet<Vector3Int> visited = new HashSet<Vector3Int>();
+        Stack<Vector3Int> stack = new Stack<Vector3Int>();
+
+        stack.Push( start );
+
+        while ( stack.Count > 0 ) {
+            Vector3Int current = stack.Pop();
+
+            if ( visited.Contains( current ) ) {
+                continue;
+            }
+
+            visited.Add( current );
+
+            if ( MoveUtilities.HorizontalDistanceBetweenIndexes(start, current) < range ) {
+                foreach ( Vector3Int direction in directions ) {
+                    Vector3Int neighbor = current + direction;
+                    if ( !visited.Contains( neighbor ) && this.containsIndex( neighbor ) ) {
+                        stack.Push( neighbor );
+                    }
+
+                }
+            }
+            
+        }
+        
+        return visited;
+    }
+
+    /// <summary>
+    /// Checks whether index exists on map.
+    /// </summary>
+    /// <param name="v">The index to check.</param>
+    /// <returns>True if index is part of map.</returns>
+    public bool containsIndex(Vector3Int v) {
+        if ( v.x < 0 || v.x >= this._dimensions.x ) {
+            return false;
+        }
+        if ( v.y < 0 || v.y >= this._dimensions.y ) {
+            return false;
+        }
+        if ( v.z < 0 || v.z >= this._dimensions.z ) {
+            return false;
+        }
+        return true;
     }
 
     public void AStarSearch() {
