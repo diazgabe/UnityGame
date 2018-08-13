@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour {
+public abstract class UIManager : MonoBehaviour, IUIManager {
 
-	// Use this for initialization
-	void Start () {
+    List<GameObject> Panels;
+
+    protected virtual void Awake() {
+        loadUI();
+    }
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -13,4 +19,11 @@ public class UIManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    private void activatePanel(GameObject panel) {
+        
+    }
+
+    public abstract void loadUI();
+
 }

@@ -8,7 +8,7 @@ public class BattleUIManager : UIManager {
 
     private static UIManager _instance;
 
-    private void Awake() {
+    protected override void Awake() {
         if ( _instance != null && _instance != this ) {
             Destroy( this.gameObject );
         } else {
@@ -52,12 +52,7 @@ public class BattleUIManager : UIManager {
 
     }
 
-    //private void loadFromJson(string filePath) {
-    //    string jsonData = File.ReadAllText(filePath);
-    //    Dictionary<string, string> eventDictionary = JsonUtility.FromJson<Dictionary<string, string>>(jsonData);
-    //    foreach (string key in eventDictionary.Keys) {
-    //        EventManager.addEventListener(key, eventDictionary[key]);
-              // I could do this with reflection but it seems weird. Must be a better way.
-    //    }
-    //}
+    public override void loadUI() {
+        throw new System.NotImplementedException();
+    }
 }

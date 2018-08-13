@@ -15,6 +15,15 @@ public class TitleScreenUIManager : UIManager {
 	}
 
     public void loadClick() {
-        Debug.Log("load click");
+        EventManager.TriggerEvent("LoadGame");
+    }
+
+    public void newGameClick() {
+        Debug.Log("TitleScreen: Clicked New Game.");
+        EventManager.TriggerEvent( "NewGame" );
+    }
+
+    public override void loadUI() {
+        throw new System.NotImplementedException();
     }
 }

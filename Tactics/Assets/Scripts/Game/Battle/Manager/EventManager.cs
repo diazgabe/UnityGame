@@ -15,10 +15,10 @@ public class EventManager : MonoBehaviour {
     UnityEvent turnFinishedEvent;
 
     private void Awake() {
-        if ( _instance != null ) {
-            Destroy(gameObject);
-        } else {
+        if ( _instance == null ) {
             _instance = this;
+        } else if ( _instance != this ) {
+            Destroy( this.gameObject );
         }
         initialize();
     }
