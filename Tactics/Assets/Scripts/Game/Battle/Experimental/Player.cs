@@ -22,9 +22,7 @@ public class Player {
 		
 	}
 
-    public void takeTurn(Turn turn) {
-        //BaseUnit baseUnit = Instantiate<BaseUnit>();
-        //playerController.activeUnit = turn.units[0];
-        //turn.units[0] = null
+    public void takeTurn() {
+
     }
 }

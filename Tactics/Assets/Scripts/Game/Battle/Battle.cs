@@ -17,7 +17,7 @@ public class Battle : MonoBehaviour, IConfigurable{
     private GameObject Ally;
     private GameObject Enemy;
     private List<Player> players;
-    private BaseTurnTracker TurnTracker;
+    private TurnTracker TurnTracker;
     
     private void Awake() {
         if ( _instance != null && _instance != this ) {
@@ -58,7 +58,7 @@ public class Battle : MonoBehaviour, IConfigurable{
     }
 
     private void initializeTurnTracker() {
-        TurnTracker = new BaseTurnTracker( (List<BaseUnit>)Allies.Concat( Enemies ) );
+        TurnTracker = new TurnTracker( (List<BaseUnit>)Allies.Concat( Enemies ) );
     }
 
     private void initializeUnits(List<UnitConfig> allyConfigs, List<UnitConfig> enemyConfigs) {
@@ -80,7 +80,9 @@ public class Battle : MonoBehaviour, IConfigurable{
 
     private void startNextTurn() {
         Turn turn = TurnTracker.advanceTurn();
-        //turn.getPlayer().takeTurn();
+        foreach ( Player player in turn.players ) {
+            player.takeTurn();
+        }
     }
 
     private void save() {

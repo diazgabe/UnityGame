@@ -1,17 +1,14 @@
 using System.Collections.Generic;
 
 public class Turn {
-    public Player player { get; }
-    public List<BaseUnit> units { get; }
+    public List<Player> players { get; }
 
-    public Turn (Player player, List<BaseUnit> units) {
-        this.player = player;
-        this.units = units;
+    public Turn (List<Player> players) {
+        this.players = players;
     }
 
-    public Turn( Player player, BaseUnit unit ) {
-        this.player = player;
-        this.units = new List<BaseUnit>();
-        units.Add(unit);
+    public Turn( Player player ) {
+        this.players = new List<Player>();
+        this.players.Add( player );
     }
 }

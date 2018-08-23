@@ -9,6 +9,7 @@ public class Game: MonoBehaviour {
     public static Game Instance { get { return _instance; } }
 
     private List<UnitData> Units;
+    public float Money { get; private set; }
 
     private void Awake() {
 
@@ -44,5 +45,25 @@ public class Game: MonoBehaviour {
 
     public void subscribeToEvents() {
         EventManager.addEventListener( "StartAIBattle", startBattleVsAI );
+    }
+
+    private void addUnit(UnitData unit) {
+        this.Units.Add( unit );
+    }
+
+    private void removeUnit( UnitData unit ) {
+        this.Units.Remove( unit );
+    }
+
+    private void earnMoney( float earnings ) {
+        this.Money += earnings;
+    }
+
+    private bool spendMoney( float expenses ) {
+        if ( this.Money >= expenses ) {
+            this.Money -= expenses;
+            return true;
+        }
+        return false;
     }
 }
