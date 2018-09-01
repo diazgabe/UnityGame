@@ -1,19 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 [System.Serializable]
 public class UnitData : IUnitData {
 
-    public string FirstName { get; set; }
-    public string MiddleName { get; set; }
-    public string LastName { get; set; }
-    public string SuperName { get; set; }
-
-    public string Backstory { get; set; }
+    public string superName { get; }
+    private List<BaseAbility> _abilities;
+    public IReadOnlyList<BaseAbility> abilities {
+        get {
+            return _abilities.AsReadOnly();
+        }
+    }
 
     public UnitData() {
+        _abilities = new List<BaseAbility>();
+    }
 
+    public void addAbility(BaseAbility ability) {
+        this._abilities.Add(ability);
+    }
+
+    public void removeAbility( BaseAbility ability ) {
+        this._abilities.Remove( ability );
     }
 
     public static UnitData generateUnit() {

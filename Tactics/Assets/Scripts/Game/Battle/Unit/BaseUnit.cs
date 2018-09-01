@@ -5,18 +5,21 @@ using UnityEngine;
 public class BaseUnit : MonoBehaviour, IUnit {
 
     public Player Owner { get; }
+    
     public int CurrentHP { get; set; }
     public int MaxHP { get; set; }
     public string Name { get; set; } 
-    public int AttackRange { get;  }
+    public int AttackRange { get; }
+    public int AttackDamage { get; }
     public int MoveRange { get; }
     public int JumpRange { get; }
     public Vector3Int Index { get; set; }
-    private IMoveAbility moveAbility;
 
+    public bool IsVisible { get; set; }
+    public bool isKOd { get; private set; }
 
     public void attack(BaseUnit unit) {
-        unit.takeDamage(1);
+        unit.takeDamage(this.AttackDamage);
     }
 
     public void takeDamage(int damage) {

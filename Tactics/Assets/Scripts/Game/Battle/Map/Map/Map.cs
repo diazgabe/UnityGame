@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Map : MonoBehaviour, IMap, IConfigurable {
+    private static Map _instance;
     private Vector3Int _dimensions;
     private GameObject[,,] _map;
     private GameObject landTile;
@@ -17,6 +18,12 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
     private HashSet<Vector3Int> highlighted;
 
     private void Awake() {
+        if ( _instance != null && _instance != this ) {
+            Destroy( this.gameObject );
+        } else {
+            _instance = this;
+        }
+
         initialize();
     }
 
@@ -105,6 +112,43 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
         }
     }
 
+    public static List<BaseUnit> getUnitsAtPosition(Vector3Int position) {
+        if (!_instance) {
+            return null;
+        }
+
+        return _instance.getTile( position ).Occupants;
+    }
+
+    public static List<BaseTile> getTilesNearPosition( Vector3Int position, int range ) {
+        List<BaseTile> tiles = new List<BaseTile>();
+
+        // Origin
+        if ( _instance.containsIndex( position ) ) {
+            tiles.Add( _instance.getTile( position ) );
+        }
+        
+        for ( int i = 1; i <= range; i++ ) {
+            foreach (Vector3Int direction in directions) {
+                Vector3Int possibleIndex = direction * i + position;
+                if ( _instance.containsIndex( possibleIndex ) ) {
+                    tiles.Add( _instance.getTile( possibleIndex ) );
+                }
+            }
+        }
+
+        return tiles;
+    }
+
+    public static List<BaseUnit> getUnitsNearPosition( Vector3Int position, int range ) {
+        List<BaseTile> tiles = getTilesNearPosition(position, range);
+        List<BaseUnit> units = new List<BaseUnit>();
+        foreach ( BaseTile tile in tiles ) {
+            units.AddRange(tile.Occupants);
+        }
+        return units;
+    }
+
     private void unHighlightTiles( HashSet<Vector3Int> tiles ) {
         IEnumerator<Vector3Int> enumerator = tiles.GetEnumerator();
         while ( enumerator.MoveNext() ) {
@@ -159,6 +203,8 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
         
         return visited;
     }
+
+
 
     /// <summary>
     /// Checks whether index exists on map.

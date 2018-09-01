@@ -1,22 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
+[System.Serializable]
 public class Team {
 
-    public string teamName { get; set; }
-    public string description { get; }
-
-    List<IUnit> members { get; }
+    private List<BaseUnit> members;
 
     public Team() {
-        members = new List<IUnit>();
+        members = new List<BaseUnit>();
     }
 
-    private void addMember( IUnit unit ) {
+    private void addMember( BaseUnit unit ) {
         members.Add(unit);
     }
 
-    private void removeMember( IUnit unit ) {
+    private void removeMember( BaseUnit unit ) {
         members.Remove(unit);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEngine;
@@ -89,5 +88,9 @@ public class Battle : MonoBehaviour, IConfigurable{
         Debug.Log( "Save" );
         string dataAsJson = JsonUtility.ToJson (this);
         File.WriteAllText( savePath, dataAsJson );
+    }
+
+    private void end() {
+        
     }
 }
