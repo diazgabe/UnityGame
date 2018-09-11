@@ -33,6 +33,11 @@ public class BaseUnit : MonoBehaviour, IUnit {
         }
     }
 
+    public void heal(int amount) {
+        int hp = CurrentHP + amount;
+        CurrentHP = (hp < this.MaxHP) ? hp : maxHP;
+    }
+
     private void KO() {
 
     }

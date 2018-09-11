@@ -211,7 +211,11 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
     /// </summary>
     /// <param name="v">The index to check.</param>
     /// <returns>True if index is part of map.</returns>
-    public bool containsIndex(Vector3Int v) {
+    public static bool containsIndex(Vector3Int v) {
+        if (!_instance) {
+            return false;
+        }
+
         if ( v.x < 0 || v.x >= this._dimensions.x ) {
             return false;
         }
