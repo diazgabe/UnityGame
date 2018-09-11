@@ -35,7 +35,7 @@ public class BaseUnit : MonoBehaviour, IUnit {
 
     public void heal(int amount) {
         int hp = CurrentHP + amount;
-        CurrentHP = (hp < this.MaxHP) ? hp : maxHP;
+        CurrentHP = (hp < this.MaxHP) ? hp : MaxHP;
     }
 
     private void KO() {

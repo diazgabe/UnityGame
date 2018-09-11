@@ -12,8 +12,8 @@ public class SiphonHealth : BaseEffect {
 	}
 
 	public override void execute( Vector3Int position ) {
-        List<BaseUnit> targets = Map.getUnitAtPosition(position);
-        foreach ( BaseUnit target of targets ) {
+        List<BaseUnit> targets = Map.getUnitsAtPosition(position);
+        foreach ( BaseUnit target in targets ) {
             target.takeDamage(this.Amount);
             user.heal(this.Amount);
         }

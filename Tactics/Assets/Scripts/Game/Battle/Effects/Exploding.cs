@@ -17,7 +17,7 @@ public class Exploding : BaseEffect {
     public override void execute( Vector3Int position ) {
         List<BaseUnit> targets = Map.getUnitsNearPosition(position, this.Range);
 
-        foreach ( BaseUnit target of targets ) {
+        foreach ( BaseUnit target in targets ) {
             target.takeDamage(this.Damage);
         }
     }

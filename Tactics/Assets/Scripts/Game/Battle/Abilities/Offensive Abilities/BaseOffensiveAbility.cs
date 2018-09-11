@@ -22,7 +22,7 @@ public class BaseOffensiveAbility : BaseAbility {
             return;
         }
 
-        List<BaseUnit> targets = new List<BaseUnit>;
+        List<BaseUnit> targets = new List<BaseUnit>();
         foreach(Vector3Int offset in this.HitArea) {
         	Vector3Int index = offset + position;
         	if (!Map.containsIndex(index)) {

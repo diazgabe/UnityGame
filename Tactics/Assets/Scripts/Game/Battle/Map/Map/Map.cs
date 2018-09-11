@@ -124,14 +124,14 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
         List<BaseTile> tiles = new List<BaseTile>();
 
         // Origin
-        if ( _instance.containsIndex( position ) ) {
+        if ( Map.containsIndex( position ) ) {
             tiles.Add( _instance.getTile( position ) );
         }
         
         for ( int i = 1; i <= range; i++ ) {
             foreach (Vector3Int direction in directions) {
                 Vector3Int possibleIndex = direction * i + position;
-                if ( _instance.containsIndex( possibleIndex ) ) {
+                if ( Map.containsIndex( possibleIndex ) ) {
                     tiles.Add( _instance.getTile( possibleIndex ) );
                 }
             }
@@ -170,7 +170,7 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
     /// <returns>Returns hashset containing all accessible tile indexes in range of start position.</returns>
     public HashSet<Vector3Int> getAccessibleTileIndexes( Vector3Int start, int range ) { 
 
-        if ( !this.containsIndex( start ) ) {
+        if ( Map.containsIndex( start ) ) {
             Debug.LogWarning("Index " + start + " is not in map.");
             return null;
         }
@@ -192,7 +192,7 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
             if ( MoveUtilities.HorizontalDistanceBetweenIndexes(start, current) < range ) {
                 foreach ( Vector3Int direction in directions ) {
                     Vector3Int neighbor = current + direction;
-                    if ( !visited.Contains( neighbor ) && this.containsIndex( neighbor ) ) {
+                    if ( !visited.Contains( neighbor ) && Map.containsIndex( neighbor ) ) {
                         stack.Push( neighbor );
                     }
 
@@ -216,13 +216,13 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
             return false;
         }
 
-        if ( v.x < 0 || v.x >= this._dimensions.x ) {
+        if ( v.x < 0 || v.x >= _instance._dimensions.x ) {
             return false;
         }
-        if ( v.y < 0 || v.y >= this._dimensions.y ) {
+        if ( v.y < 0 || v.y >= _instance._dimensions.y ) {
             return false;
         }
-        if ( v.z < 0 || v.z >= this._dimensions.z ) {
+        if ( v.z < 0 || v.z >= _instance._dimensions.z ) {
             return false;
         }
         return true;
