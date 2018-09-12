@@ -22,20 +22,24 @@ public class BaseUnit : MonoBehaviour, IUnit {
         unit.takeDamage(this.AttackDamage);
     }
 
-    public void takeDamage(int damage) {
-        int result = this.CurrentHP - damage;
-        if (result < 0) {
+    public int takeDamage( int damage ) {
+        int damageTaken = 0;
+
+        if ( damage >= this.CurrentHP ) {
+            damageTaken = this.CurrentHP;
             this.CurrentHP = 0;
             this.KO();
+        } else {
+            damageTaken = damage;
+            this.CurrentHP -= damage;
         }
-        else {
-            this.CurrentHP = result;
-        }
+
+        return damageTaken;
     }
 
-    public void heal(int amount) {
+    public void heal( int amount ) {
         int hp = CurrentHP + amount;
-        CurrentHP = (hp < this.MaxHP) ? hp : MaxHP;
+        CurrentHP = ( hp < this.MaxHP ) ? hp : MaxHP;
     }
 
     private void KO() {
