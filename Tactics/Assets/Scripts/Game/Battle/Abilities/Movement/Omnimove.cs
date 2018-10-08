@@ -1,16 +1,19 @@
-﻿//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+﻿public class Omnimove : BaseMoveAbility {
 
-//public class Omnimove : BaseMoveAbility {
+    public Omnimove( BaseUnit user, int range ) : base( user, range ) { }
 
-//	// Use this for initialization
-//	void Start () {
-		
-//	}
-	
-//	// Update is called once per frame
-//	void Update () {
-		
-//	}
-//}
+    public override bool canExecute( BaseTile targetDestination ) {
+        if ( !base.canExecute( targetDestination ) ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public override void execute( BaseTile targetDestination ) {
+        if (!this.canExecute(targetDestination)) {
+            return;
+        }
+        user.transform.position = targetDestination.transform.position;
+    }
+}

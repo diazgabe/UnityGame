@@ -1,28 +1,37 @@
-//using UnityEngine;
-//using System.Collections;
+using UnityEngine;
+using System.Collections;
 
-//public class Walk : BaseAbility {
-//    private float _moveSpeed;
+public class Walk : BaseMoveAbility {
+    private int jumpRange;
 
-//    public bool canExecute(ITile from, ITile to, int moveRange) {
-//        Vector3Int delta = Vector3.Distance(to.Location - from.Location);
-//        int distance = delta.x + delta.z;
-//        if (distance > moveRange) {
-//            return false;
-//        }
+    public Walk( BaseUnit user, int range, int jumpRange ) : base( user, range ) {
+        this.jumpRange = jumpRange;
+    }
 
-//        return true;
-//	}
+    public bool canExecute( BaseTile targetDestination ) {
+        if ( !base.canExecute( targetDestination ) ) {
+            return false;
+        }
 
-//    public override void execute(Transform transform, Vector3 destination) {
-//        StartCoroutine(animateMove(transform, destination));
-//	}
+        // getPathFromAToB
+        // if path !exist, return false
+        // return true;
+        throw new System.NotImplementedException();
+    }
 
-//    private IEnumerator animateMove(Transform transform, Vector3 destination) {
-//        float step = this._moveSpeed * Time.deltaTime;
-//        while (transform.position != destination) {
-//            transform.position = Vector3.MoveTowards(transform.position, destination, step);
-//            yield return null;
-//        }
-//    }
-//}
+    public override void execute( BaseTile targetDestination ) {
+        if ( !this.canExecute( targetDestination ) ) {
+            return;
+        }
+        throw new System.NotImplementedException();
+        //StartCoroutine( animateMove( transform, destination ) );
+    }
+
+    //private IEnumerator animateMove( Transform transform, Vector3 destination ) {
+    //    float step = this._moveSpeed * Time.deltaTime;
+    //    while ( transform.position != destination ) {
+    //        transform.position = Vector3.MoveTowards( transform.position, destination, step );
+    //        yield return null;
+    //    }
+    //}
+}

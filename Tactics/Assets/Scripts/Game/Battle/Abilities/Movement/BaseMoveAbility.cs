@@ -1,11 +1,19 @@
 using UnityEngine;
-using System.Collections;
 
 public abstract class BaseMoveAbility : MonoBehaviour, IMoveAbility {
 
-    //public abstract bool canExecute(ITile from, ITile to, int moveRange);
-    //public abstract void execute();
+    protected BaseUnit user;
+    protected int range;
 
-    public abstract bool canPassThrough( ITile tile );
-    public abstract bool canEndTurnOn( ITile tile );
+    public BaseMoveAbility( BaseUnit user, int range ) {
+        this.user = user;
+        this.range = range;
+    }
+
+    public virtual bool canExecute( BaseTile targetDestination ) {
+        return Map.containsIndex( targetDestination.Index );
+    }
+
+    public abstract void execute( BaseTile targetDestination );
+
 }

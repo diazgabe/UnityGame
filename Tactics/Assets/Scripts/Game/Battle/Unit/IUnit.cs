@@ -5,7 +5,6 @@ using UnityEngine;
 public interface IUnit {
 
     string Name { get; set; }
-    int MoveRange { get; }
     Vector3Int Index { get; set; }
     Player Owner { get;  }
 

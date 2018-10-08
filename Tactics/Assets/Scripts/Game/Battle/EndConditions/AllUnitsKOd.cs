@@ -1,8 +1,5 @@
 ﻿using System.Collections.Generic;
 
-
-
-
 public class AllUnitsKOd : EndCondition {
 
     public IReadOnlyList<BaseUnit> units;
@@ -19,5 +16,9 @@ public class AllUnitsKOd : EndCondition {
         }
 
         return true;
+    }
+
+    public override void trigger() {
+        throw new System.NotImplementedException();
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BaseUnit : MonoBehaviour, IUnit {
 
@@ -11,7 +9,6 @@ public class BaseUnit : MonoBehaviour, IUnit {
     public string Name { get; set; } 
     public int AttackRange { get; }
     public int AttackDamage { get; }
-    public int MoveRange { get; }
     public int JumpRange { get; }
     public Vector3Int Index { get; set; }
 

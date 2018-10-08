@@ -157,7 +157,11 @@ public class Map : MonoBehaviour, IMap, IConfigurable {
         }
     }
 
-    private BaseTile getTile(Vector3Int v) {
+    public GameObject getTileGameObject( Vector3Int v ) {
+        return _map[v.x, v.y, v.z];
+    }
+
+    public BaseTile getTile(Vector3Int v) {
         return _map[v.x, v.y, v.z].GetComponent<BaseTile>();
     }
 

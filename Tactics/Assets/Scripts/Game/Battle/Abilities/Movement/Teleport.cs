@@ -1,30 +1,30 @@
 using UnityEngine;
-using System.Collections;
 
 public class Teleport : BaseMoveAbility {
 
-    //public bool canExecute( ITile from, ITile to, int moveRange ) {
-    //    Vector3Int delta = Vector3.Distance(to.Location - from.Location);
-    //    int distance = delta.x + delta.z;
-    //    if ( distance > moveRange ) {
-    //        return false;
-    //    }
+    public Teleport(BaseUnit user, int range) : base(user, range) { }
 
-    //    return true;
-    //}
+    public override bool canExecute( BaseTile targetDestination ) {
+        if ( !base.canExecute( targetDestination ) ) {
+            return false;
+        }
 
-    public override bool canEndTurnOn( ITile tile ) {
+        if ( Utilities.getHorizontalDistanceBetweenIndexes( targetDestination.Index, this.user.Index ) > this.range ) {
+            return false;
+        }
         return true;
     }
 
-    public override bool canPassThrough( ITile tile ) {
-        return true;
+    public override void execute( BaseTile targetDestination ) {
+        if ( !this.canExecute( targetDestination ) ) {
+            return;
+        }
+        user.GetComponent<MeshRenderer>().enabled = false;
+        user.transform.position = targetDestination.transform.position;
+        user.GetComponent<MeshRenderer>().enabled = true;
     }
 
-    public void execute( Transform transform, Vector3 destination ) {
-        //StartCoroutine( animateMove( transform, destination ) );
-    }
-
+    //StartCoroutine( animateMove( transform, destination ) );
     //private IEnumerator animateMove( Transform transform, Vector3 destination ) {
     //    transform.GetComponent<Animation>().Play();
     //}
